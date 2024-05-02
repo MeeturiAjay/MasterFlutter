@@ -55,11 +55,9 @@ class Mydrawer extends StatelessWidget {
               color: Colors.white,
             ),
             title: Text(
-                "Settings",
+              "Settings",
               textScaleFactor: 1.2,
-              style: TextStyle(
-                color: Colors.white
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           const ListTile(
@@ -70,9 +68,7 @@ class Mydrawer extends StatelessWidget {
             title: Text(
               "Location",
               textScaleFactor: 1.2,
-              style: TextStyle(
-                  color: Colors.white
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           )
         ],

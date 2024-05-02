@@ -19,19 +19,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           //brightness: Brightness.light,
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.indigo,
-            foregroundColor: Colors.white,
-          )
-      ),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+      )),
       darkTheme: ThemeData(
-          //brightness: Brightness.dark,
-          primarySwatch: Colors.red,
+        //brightness: Brightness.dark,
+        primarySwatch: Colors.red,
         fontFamily: GoogleFonts.lato().fontFamily,
-          ),
+      ),
       initialRoute: "/",
       routes: {
         "/": (context) => HomePage(),
-        "/login" : (context) => LoginPage()// either home or routes should be used not both
+        "/login": (context) => LoginPage()
+        // either home or routes should be used not both
       },
     );
   }

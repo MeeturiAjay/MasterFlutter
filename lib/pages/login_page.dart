@@ -71,7 +71,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               InkWell(
                 onTap: () async {
-                  if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+                  if (_formKey.currentState != null &&
+                      _formKey.currentState!.validate()) {
                     setState(() {
                       changebutton = true;
                     });
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     );
                     await Navigator.pushNamed(context, "/");
                     setState(
-                          () {
+                      () {
                         changebutton = false;
                       },
                     );
@@ -98,12 +99,12 @@ class _LoginPageState extends State<LoginPage> {
                   child: changebutton
                       ? const Icon(Icons.done, color: Colors.white)
                       : const Text(
-                    "Login",
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
+                          "Login",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                 ),
               )
             ],
