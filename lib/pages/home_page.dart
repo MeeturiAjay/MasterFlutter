@@ -8,8 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
+        //backgroundColor: Colors.indigo,
         title: const Text("Master Flutter"),
       ),
       drawer: Mydrawer(),
