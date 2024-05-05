@@ -1,0 +1,77 @@
+{
+  "products" :
+          [
+            {
+              "id" : 1,
+              "name" : "iPhone 12 Pro",
+              "desc" : "Apple iPhone 12th Gen",
+              "price" : 999,
+              "color" : "#33505a",
+              "image" :
+              "https://imgs.search.brave.com/jqVGb2uv1SWKSHmodNcLAbLtCzDApjitEMIAn3RoHf4/rs:fit:500:0:0/g:ce/aHR0cHM6Ly93d3cu/OTEtaW1nLmNvbS9n/YWxsZXJ5X2ltYWdl/c191cGxvYWRzLzYv/Zi82ZjBlNDRkNGI3/MDdlMDFjYjFiOTJi/ZDYwZTViOWIzN2Fj/ZTFmZDI1LmpwZz90/cj1oLTU1MCx3LTAs/Yy1hdF9tYXg")
+            },
+            {
+              "id" : 2,
+              "name" : "M1 Macbook Air",
+              "desc" : "Apple Macbook air with apple silicon",
+              "price" : 1099,
+              "color" : "#e0bFae",
+              "image" :
+              "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.apple.com%2Fnewsroom%2F2020%2F11%2Fintroducing-the-next-generation-of-mac%2F&psig=AOvVaw20VpY_W83iUZ_1XbKSQihS&ust=1714964120396000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCU-K_B9YUDFQAAAAAdAAAAABAE"
+            },
+            {
+              "id" : 3,
+              "name" : "M1 Macbook Air",
+              "desc" : "Apple Macbook air with apple silicon",
+              "price" : 1099,
+              "color" : "#e0bfae",
+              "image" :
+              "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.apple.com%2Fnewsroom%2F2020%2F11%2Fintroducing-the-next-generation-of-mac%2F&psig=AOvVaw20VpY_W83iUZ_1XbKSQihS&ust=1714964120396000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCU-K_B9YUDFQAAAAAdAAAAABAE"
+            },
+            {
+              "id" : 4,
+              "name" : "Playstation 5",
+              "desc" : "Sony Playstation 5th generation",
+              "price" : 500,
+              "color" : "#544ee4",
+              "image" :
+              "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages-cdn.ubuy.co.in%2F655048551f811e36c462dae7-sony-playstation-5-console-ps5-disc.jpg&tbnid=pa_gDFOrM8AkyM&vet=12ahUKEwj_neaSwvWFAxWk2jgGHRGQA9gQMygBegQIARBJ..i&imgrefurl=https%3A%2F%2Fwww.ubuy.co.in%2Fproduct%2F3W5W433R4-sony-playstation-5-console-ps5-disc-console-video-game-consoles-open-box-accessory-set&docid=uLBd7vFejg-bDM&w=1224&h=1224&q=Sony%20Playstation%205th%20generation%20images&ved=2ahUKEwj_neaSwvWFAxWk2jgGHRGQA9gQMygBegQIARBJ"
+            },
+            {
+              "id" : 5,
+              "name" : "Airpods Pro",
+              "desc" : "Apple Airpods Pro 1st generation",
+              "price" : 200,
+              "color" : "#e3e4e9",
+              "image" :
+              "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.croma.com%2Fimage%2Fupload%2Fv1674044805%2FCroma%2520Assets%2FCommunication%2FHeadphones%2520and%2520Earphones%2FImages%2F251322_0_tpksnj.png&tbnid=doNwfeDe5CADAM&vet=12ahUKEwjHgprGwvWFAxWWzaACHbz0CeMQMygGegQIARBZ..i&imgrefurl=https%3A%2F%2Fwww.croma.com%2Fapple-airpods-pro-1st-generation-with-magsafe-charging-case%2Fp%2F251322&docid=ayCn67ieQmk3PM&w=1600&h=1600&q=%20Airpods%20Pro%201st%20generation%20images&ved=2ahUKEwjHgprGwvWFAxWWzaACHbz0CeMQMygGegQIARBZ"
+            },
+            {
+              "id" : 6,
+              "name" : "iPad Pro",
+              "desc" : "Apple iPad Pro 2020 edition",
+              "price" : 799,
+              "color" : "#f73984",
+              "image" :
+              "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages-cdn.ubuy.co.in%2F63d95561edadcc7f36726993-2020-apple-ipad-pro-4th-gen-12-9-inch.jpg&tbnid=yF2B_7iIvKlMgM&vet=12ahUKEwjcrtj3wvWFAxW16DgGHePVCxUQMygAegQIARBW..i&imgrefurl=https%3A%2F%2Fwww.ubuy.co.in%2Fproduct%2F1C3WPMK1C-new-apple-ipad-pro-12-9-inch-wi-fi-cellular-512gb-space-gray-4th-generation&docid=uSPnmDruGO99uM&w=1368&h=1500&q=Apple%20iPad%20Pro%202020%20edition%20images&ved=2ahUKEwjcrtj3wvWFAxW16DgGHePVCxUQMygAegQIARBW"
+            },
+            {
+              "id" : 7,
+              "name" : "Galaxy S21 Ultra",
+              "desc" : "Samsung Galaxy S21 Ultra 2021 edition",
+              "price" : 1299,
+              "color" : "#1c1c1c",
+              "image" :
+              "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.fonearena.com%2Fblog%2Fwp-content%2Fuploads%2F2021%2F01%2FSamsung-Galaxy-S21-Ultra-5G-1024x897.jpg&tbnid=WNvMbYroOfompM&vet=12ahUKEwi7pKyqw_WFAxVtzaACHTEqAiwQMygDegQIARBV..i&imgrefurl=https%3A%2F%2Fwww.fonearena.com%2Fblog%2F331121%2Fsamsung-galaxy-s21-ultra-5g-price-specifications.html&docid=aqfXv4A8jZWxsM&w=1024&h=897&q=Samsung%20Galaxy%20S21%20Ultra%202021%20edition%20images&ved=2ahUKEwi7pKyqw_WFAxVtzaACHTEqAiwQMygDegQIARBV"
+            },
+            {
+              "id" : 8,
+              "name" : "Galaxy S21",
+              "desc" : "Samsung Galaxy S21 2021 edition",
+              "price" : 899,
+              "color" : "#7c95eb",
+              "image" :
+              "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.dxomark.com%2Fwp-content%2Fuploads%2Fmedias%2Fpost-74826%2FSamsungGalaxys215g.jpg&tbnid=hHJON_49nXyoBM&vet=12ahUKEwiM5oLlw_WFAxVM6DgGHUrxAzwQMygBegQIARBY..i&imgrefurl=https%3A%2F%2Fwww.dxomark.com%2Fsamsung-galaxy-s21-5g-exynos-camera-review-s-series-base-model%2F&docid=1BthKnZAO435_M&w=1281&h=865&q=Samsung%20Galaxy%20S21%202021%20edition%20images&ved=2ahUKEwiM5oLlw_WFAxVM6DgGHUrxAzwQMygBegQIARBY"
+            }
+          ]
+}
