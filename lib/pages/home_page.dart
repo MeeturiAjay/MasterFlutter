@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masterflutter/models/catalog.dart';
@@ -31,58 +34,127 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  // Fixed super.key to Key? key
   @override
   Widget build(BuildContext context) {
-    // final DummyList = List.generate(20, (index) => CatalogModels.items[0]);
     return Scaffold(
-      appBar: AppBar(
-        //backgroundColor: Colors.indigo,
-        title: const Text("Master Flutter"),
+      //backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CatalogHeader(),
+              const SizedBox(height: 30),
+              if (CatalogModels.items != null && CatalogModels.items.isNotEmpty)
+                CatalogList()
+              else
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            ],
+          ),
+        ),
       ),
-      drawer: Mydrawer(), // Changed to MyDrawer
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: (CatalogModels.items != null && CatalogModels.items.isNotEmpty)
-            ? GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 16,
-                    crossAxisSpacing: 16),
-                itemBuilder: (BuildContext context, int index) {
-                  // Added parameter names
-                  final item = CatalogModels.items[index];
-                  return Card(
-                    clipBehavior: Clip.antiAlias,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: GridTile(
-                      header: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(color: Colors.indigo),
-                        child: Text(
-                          item.name,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      footer: Container(
-                        padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            color: Colors.indigo
-                          ),
-                          child: Text(
-                            style: const TextStyle(
-                              color: Colors.white
-                            ),
-                              "\$${item.price.toString()}")),
-                      // Changed to Text widget
-                      child: Image.network(item.image),
+    );
+  }
+}
+
+class CatalogHeader extends StatelessWidget {
+  const CatalogHeader({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Catalog Application",
+          style: TextStyle(
+              color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          "Trending products",
+          style: TextStyle(color: Colors.black),
+        )
+      ],
+    );
+  }
+}
+
+class CatalogList extends StatelessWidget {
+  const CatalogList({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          final catalog = CatalogModels.items[index];
+          return CatalogItem(catalog: catalog);
+        },
+        itemCount: CatalogModels.items.length,
+      ),
+    );
+  }
+}
+
+class CatalogItem extends StatelessWidget {
+  final Item catalog;
+
+  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            margin: const EdgeInsets.all(8),
+            child: Image.network(catalog.image),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  catalog.name,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  catalog.desc,
+                  style: TextStyle(fontSize: 16),
+                ),
+                ButtonBar(
+                  alignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "\$${catalog.price}",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18,
+                      color: Colors.indigo),
                     ),
-                  );
-                },
-                itemCount: CatalogModels.items.length,
-              )
-            : const Center(child: CircularProgressIndicator()),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.indigo),
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
+                          ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Buy",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
