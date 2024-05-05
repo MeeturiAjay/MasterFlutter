@@ -20,8 +20,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async{
-    var catalogJson = await rootBundle.loadString("assets/files/catalog.json");
-    var decodedData = jsonDecode(catalogJson);
+    final catalogJson = await rootBundle.loadString("assets/files/catalog.json");
+    final decodedData = jsonDecode(catalogJson);
+    var productsData = decodedData["products"];
   }
 
   // Fixed super.key to Key? key
