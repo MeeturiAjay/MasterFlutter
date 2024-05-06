@@ -1,12 +1,11 @@
-import 'dart:ui';
+import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masterflutter/models/catalog.dart';
-import 'item_widget.dart'; // Changed to lowercase
-import 'drawer.dart'; // Importing the drawer.dart file
-import 'dart:convert';
+import 'package:masterflutter/pages/home_details.dart';
+import 'item_widget.dart';
+import 'drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key});
@@ -25,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     await Future.delayed(const Duration(seconds: 2));
     final catalogJson =
-        await rootBundle.loadString("assets/files/catalog.json");
+    await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
     CatalogModels.items = List.from(productsData)
@@ -37,7 +36,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(32),
@@ -49,8 +47,10 @@ class _HomePageState extends State<HomePage> {
               if (CatalogModels.items != null && CatalogModels.items.isNotEmpty)
                 CatalogList()
               else
-                const Center(
-                  child: CircularProgressIndicator(),
+                const Expanded(
+                  child: Center(
+                    child: LinearProgressIndicator(),
+                  ),
                 ),
             ],
           ),
@@ -75,7 +75,7 @@ class CatalogHeader extends StatelessWidget {
         ),
         Text(
           "Trending products",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.indigo),
         )
       ],
     );
@@ -91,7 +91,15 @@ class CatalogList extends StatelessWidget {
       child: ListView.builder(
         itemBuilder: (context, index) {
           final catalog = CatalogModels.items[index];
-          return CatalogItem(catalog: catalog);
+          return InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeDetailsPage(catalog: catalog),
+              ),
+            ),
+            child: CatalogItem(catalog: catalog),
+          );
         },
         itemCount: CatalogModels.items.length,
       ),
@@ -114,7 +122,9 @@ class CatalogItem extends StatelessWidget {
             width: 100,
             height: 100,
             margin: const EdgeInsets.all(8),
-            child: Image.network(catalog.image),
+            child: Hero(
+                tag: Key(catalog.id.toString()),
+                child: Image.network(catalog.image)),
           ),
           Expanded(
             child: Column(
@@ -134,15 +144,17 @@ class CatalogItem extends StatelessWidget {
                     Text(
                       "\$${catalog.price}",
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18,
-                      color: Colors.indigo),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.indigo),
                     ),
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.indigo),
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
-                          ),
+                          MaterialStateProperty.all<Color>(Colors.indigo),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)))),
                       onPressed: () {},
                       child: const Text(
                         "Buy",
