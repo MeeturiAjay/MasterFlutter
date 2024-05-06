@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:masterflutter/models/catalog.dart';
+import 'package:masterflutter/pages/cart.dart';
 import 'package:masterflutter/pages/home_details.dart';
 import 'item_widget.dart';
 import 'drawer.dart';
@@ -24,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     await Future.delayed(const Duration(seconds: 2));
     final catalogJson =
-    await rootBundle.loadString("assets/files/catalog.json");
+        await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
     CatalogModels.items = List.from(productsData)
@@ -36,9 +39,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+        onPressed: () => Navigator.pushNamed(context, "/cart"),
+        child: Icon(CupertinoIcons.cart),
+      ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -123,8 +132,9 @@ class CatalogItem extends StatelessWidget {
             height: 100,
             margin: const EdgeInsets.all(8),
             child: Hero(
-                tag: Key(catalog.id.toString()),
-                child: Image.network(catalog.image)),
+              tag: Key(catalog.id.toString()),
+              child: Image.network(catalog.image),
+            ),
           ),
           Expanded(
             child: Column(
@@ -138,31 +148,38 @@ class CatalogItem extends StatelessWidget {
                   catalog.desc,
                   style: TextStyle(fontSize: 16),
                 ),
-                ButtonBar(
-                  alignment: MainAxisAlignment.spaceBetween,
+                SizedBox(height: 8), // Adding some vertical space
+                Row(
                   children: [
                     Text(
                       "\$${catalog.price}",
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: Colors.indigo),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.indigo),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)))),
-                      onPressed: () {},
-                      child: const Text(
-                        "Buy",
-                        style: TextStyle(color: Colors.white),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.indigo,
                       ),
-                    )
+                    ),
+                    Spacer(), // Add a spacer to push the button to the end
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          "Add to Cart",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),

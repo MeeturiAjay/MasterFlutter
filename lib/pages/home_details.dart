@@ -41,11 +41,17 @@ class HomeDetailsPage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
+        title: Text(
+            "Details",
+        style: TextStyle(
+          color: Colors.indigo,
+          fontWeight: FontWeight.bold
+        ),),
         backgroundColor: Colors.white60,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
-          color: Colors.black,
+          color: Colors.indigo,
         ),
       ),
       body: SafeArea(
