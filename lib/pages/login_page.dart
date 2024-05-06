@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -15,30 +16,47 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Material(
-      color: Colors.white,
+      color: isDarkMode ? Colors.indigo : Colors.white, // Adjust background color based on theme mode
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 80.0,
               ),
-              Image.asset("assets/images/login_image.png", fit: BoxFit.fill),
-              const Text(
+              SafeArea(
+                minimum: EdgeInsets.all(32),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), // Adjust border radius as needed
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20), // Adjust border radius as needed
+                    child: Image.asset(
+                      "assets/images/login_image.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+              Text(
                 "Log in/Sign in",
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.indigo), // Adjust text color based on theme mode
               ),
               Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Username",
+                        labelStyle: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
                         hintText: "Enter Username",
-                        hintStyle: TextStyle(fontSize: 15.0),
+                        hintStyle: TextStyle(fontSize: 15.0, color: isDarkMode ? Colors.white : Colors.black), // Adjust hint text color based on theme mode
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -46,13 +64,15 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
+                      style: TextStyle(color: isDarkMode ? Colors.white : Colors.black), // Adjust text color based on theme mode
                     ),
                     TextFormField(
                       obscureText: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Password",
+                        labelStyle: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
                         hintText: "Enter Password",
-                        hintStyle: TextStyle(fontSize: 15.0),
+                        hintStyle: TextStyle(fontSize: 15.0, color: isDarkMode ? Colors.white : Colors.black), // Adjust hint text color based on theme mode
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -62,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                         return null;
                       },
+                      style: TextStyle(color: isDarkMode ? Colors.white : Colors.black), // Adjust text color based on theme mode
                     ),
                   ],
                 ),
@@ -81,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     );
                     await Navigator.pushNamed(context, "/");
                     setState(
-                      () {
+                          () {
                         changebutton = false;
                       },
                     );
@@ -93,18 +114,18 @@ class _LoginPageState extends State<LoginPage> {
                   width: changebutton ? 40 : 120,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.indigo,
+                    color: isDarkMode ? Colors.white : Colors.indigo, // Adjust button color based on theme mode
                     borderRadius: BorderRadius.circular(changebutton ? 40 : 10),
                   ),
                   child: changebutton
-                      ? const Icon(Icons.done, color: Colors.white)
-                      : const Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                      ? Icon(Icons.done, color: isDarkMode ? Colors.indigo : Colors.white)
+                      : Text(
+                    "Login",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: isDarkMode ? Colors.indigo : Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               )
             ],
