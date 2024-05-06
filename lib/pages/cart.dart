@@ -73,7 +73,16 @@ class CartTotal extends StatelessWidget {
                 isDarkMode ? Colors.white : Colors.indigo,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    "Buying not supported yet..",
+                    style: TextStyle(color: isDarkMode? Colors.black : Colors.white),
+                  ),
+                ),
+              );
+            },
             child: Text(
               "Buy",
               style: TextStyle(
@@ -107,15 +116,13 @@ class _CartListState extends State<CartList> {
           color: Colors.green,
         ),
         title: Text(
-            "Item $index",
-        style: TextStyle(
-          color: isDarkMode? Colors.white : Colors.black
-        ),
+          "Item $index",
+          style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
         ), // Display actual item names
         trailing: IconButton(
           icon: Icon(
-              Icons.remove_circle_outline,
-          color: Colors.red,
+            Icons.remove_circle_outline,
+            color: Colors.red,
           ),
           onPressed: () {},
         ),
