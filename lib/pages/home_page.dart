@@ -119,7 +119,7 @@ class CatalogList extends StatelessWidget {
                 builder: (context) => HomeDetailsPage(catalog: catalog),
               ),
             ),
-            child: CatalogItem(catalog: catalog),
+            child: CatalogItem(catalog: catalog), // Pass catalog here
           );
         },
         itemCount: CatalogModels.items.length,
@@ -127,6 +127,7 @@ class CatalogList extends StatelessWidget {
     );
   }
 }
+
 
 class CatalogItem extends StatelessWidget {
   final Item catalog;
