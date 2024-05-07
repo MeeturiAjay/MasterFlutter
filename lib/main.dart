@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:masterflutter/core/store.dart';
 import 'package:masterflutter/models/cart_model.dart';
 import 'package:masterflutter/pages/home_page.dart';
 import 'package:masterflutter/pages/cart.dart' as cart_page;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masterflutter/pages/login_page.dart';
-
+import 'package:velocity_x/velocity_x.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    VxState(
+      store: MyStore(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
