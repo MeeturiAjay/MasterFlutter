@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../models/catalog.dart';
+import 'package:masterflutter/models/cart_model.dart';
 
 class CartPage extends StatelessWidget {
-  const CartPage({Key? key});
+  //final CartModel cart;
+
+  const CartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: isDarkMode ? Colors.indigo : Colors.white,
       appBar: AppBar(
@@ -28,34 +31,39 @@ class CartPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(32.0),
               child: CartList(),
             ),
-          ),
-          CartTotal()
-        ],
+            CartTotal(),
+          ],
+        ),
       ),
     );
   }
 }
 
+
 class CartTotal extends StatelessWidget {
-  const CartTotal({Key? key});
+  //final CartModel cart;
+
+  const CartTotal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _cart = CartModel();
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return SizedBox(
       height: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            "\$${99999}",
+            "\$${_cart.totalPrice}",
             style: TextStyle(
               color: isDarkMode ? Colors.white : Colors.indigo,
               fontWeight: FontWeight.bold,
@@ -74,11 +82,14 @@ class CartTotal extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              // Implement buy functionality here
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
                     "Buying not supported yet..",
-                    style: TextStyle(color: isDarkMode? Colors.black : Colors.white),
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.black : Colors.white,
+                    ),
                   ),
                 ),
               );
@@ -90,7 +101,7 @@ class CartTotal extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -98,35 +109,42 @@ class CartTotal extends StatelessWidget {
 }
 
 class CartList extends StatefulWidget {
-  const CartList({Key? key});
+  //final CartModel cart;
+
+  const CartList({Key? key}) : super(key: key);
 
   @override
   State<CartList> createState() => _CartListState();
 }
 
 class _CartListState extends State<CartList> {
+  final _cart = CartModel();
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return ListView.builder(
-      itemCount: 5, // Replace this with the actual number of items in the cart
+      shrinkWrap: true,
+      itemCount: _cart.items?.length,
       itemBuilder: (context, index) => ListTile(
-        leading: Icon(
-          Icons.done_outline_rounded,
-          color: Colors.green,
-        ),
-        title: Text(
-          "Item $index",
-          style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-        ), // Display actual item names
-        trailing: IconButton(
-          icon: Icon(
-            Icons.remove_circle_outline,
-            color: Colors.red,
+          leading: Icon(
+            Icons.done_outline_rounded,
+            color: Colors.green,
           ),
-          onPressed: () {},
-        ),
-      ),
+          title: Text(
+            _cart.items[index].name,
+            style: TextStyle(
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              Icons.remove_circle_outline,
+              color: Colors.red,
+            ),
+            onPressed: () {},
+          )),
     );
   }
 }

@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:masterflutter/models/cart_model.dart';
 import 'package:masterflutter/models/catalog.dart';
-import 'package:masterflutter/pages/cart.dart';
 import 'package:masterflutter/pages/home_details.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
+  final CartModel cart;
+
+  const HomePage({Key? key, required this.cart}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -104,7 +106,9 @@ class CatalogHeader extends StatelessWidget {
 }
 
 class CatalogList extends StatelessWidget {
-  const CatalogList({Key? key});
+  //final CartModel cart;
+
+  const CatalogList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +123,7 @@ class CatalogList extends StatelessWidget {
                 builder: (context) => HomeDetailsPage(catalog: catalog),
               ),
             ),
-            child: CatalogItem(catalog: catalog), // Pass catalog here
+            child: CatalogItem(catalog: catalog),
           );
         },
         itemCount: CatalogModels.items.length,
@@ -128,11 +132,11 @@ class CatalogList extends StatelessWidget {
   }
 }
 
-
 class CatalogItem extends StatelessWidget {
   final Item catalog;
 
-  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
+  const CatalogItem({Key? key, required this.catalog})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -141,9 +145,9 @@ class CatalogItem extends StatelessWidget {
     return Card(
       elevation: 0.1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16), // Adjust border radius as needed
+        borderRadius: BorderRadius.circular(16),
       ),
-      color: isDarkMode ? Colors.white : null, // Set background color based on theme mode
+      color: isDarkMode ? Colors.white : null,
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
         children: [
@@ -152,7 +156,7 @@ class CatalogItem extends StatelessWidget {
             height: 100,
             margin: const EdgeInsets.all(8),
             child: Hero(
-              tag: Key(catalog.id.toString()),
+              tag: 'product_${catalog.id}', // Unique tag for each item
               child: Image.network(catalog.image),
             ),
           ),
@@ -175,7 +179,7 @@ class CatalogItem extends StatelessWidget {
                     color: isDarkMode ? Colors.black : Colors.black,
                   ),
                 ),
-                SizedBox(height: 8), // Adding some vertical space
+                SizedBox(height: 8),
                 Row(
                   children: [
                     Text(
@@ -186,30 +190,12 @@ class CatalogItem extends StatelessWidget {
                         color: isDarkMode ? Colors.indigo : Colors.indigo,
                       ),
                     ),
-                    Spacer(), // Add a spacer to push the button to the end
+                    Spacer(),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 4.0), // Adjust the padding to move the button
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.indigo,
-                            ),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            "Add to Cart",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: _AddToCart(catalog: catalog),
                       ),
                     ),
                   ],
@@ -221,4 +207,58 @@ class CatalogItem extends StatelessWidget {
       ),
     );
   }
+}
+
+class _AddToCart extends StatefulWidget {
+  final Item catalog;
+  //final CartModel cart;
+
+  const _AddToCart({Key? key, required this.catalog})
+      : super(key: key);
+
+  @override
+  State<_AddToCart> createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<_AddToCart> {
+  bool isAdded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        isAdded = isAdded.toggle();
+        final _catalog = CatalogModels();
+        final _cart = CartModel();
+        _cart.catalog = _catalog;
+        _cart.add(widget.catalog);
+        setState(() {});
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          isAdded ? Colors.grey : Colors.indigo,
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      child: isAdded
+          ? Icon(
+        Icons.done,
+        color: Colors.white,
+      )
+          : Text(
+        "Add to Cart",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+extension BoolExtension on bool {
+  bool toggle() => !this;
 }

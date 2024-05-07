@@ -1,4 +1,9 @@
 class CatalogModels {
+
+  static final catModel = CatalogModels._internal();
+  CatalogModels._internal();
+  factory CatalogModels() => catModel;
+
   static List<Item> items = [];
 
   Item getById(int id) =>
@@ -15,14 +20,14 @@ class Item {
 
   Item({required this.id, required this.name, required this.desc, required this.price, required this.color,  required this.image});
 
-  factory Item.fromMap(Map<String, dynamic>map) {
+  factory Item.fromMap(Map<String, dynamic> map) {
     return Item(
-      id : map["id"],
-      name : map["name"],
-      desc : map["desc"],
-      price : map["price"],
-      color : map["color"],
-      image : map["image"]
+        id : map["id"],
+        name : map["name"],
+        desc : map["desc"],
+        price : map["price"],
+        color : map["color"],
+        image : map["image"]
     );
   }
 }

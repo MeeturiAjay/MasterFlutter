@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:masterflutter/pages/cart.dart';
-import 'package:masterflutter/pages/home_details.dart';
-import 'package:masterflutter/pages/login_page.dart';
+import 'package:masterflutter/models/cart_model.dart';
 import 'package:masterflutter/pages/home_page.dart';
-import 'package:masterflutter/models/catalog.dart'; // Import catalog model
+import 'package:masterflutter/pages/cart.dart' as cart_page;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:masterflutter/pages/login_page.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final cart = CartModel();
+
     return MaterialApp(
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
@@ -22,10 +26,10 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         textTheme: GoogleFonts.latoTextTheme().copyWith(
-          bodyText1: TextStyle(color: Colors.black), // Adjust text color for light mode
-          bodyText2: TextStyle(color: Colors.black), // Adjust text color for light mode
-          headline6: TextStyle(
-            color: Colors.black, // Set app bar title text color for light mode
+          bodyLarge: const TextStyle(color: Colors.black),
+          bodyMedium: const TextStyle(color: Colors.black),
+          titleLarge: const TextStyle(
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -34,26 +38,26 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xff403b58), // Background color in dark mode
+          backgroundColor: Color(0xff403b58),
           foregroundColor: Colors.white,
         ),
-        scaffoldBackgroundColor: const Color(0xff403b88), // Background color in dark mode
-        cardColor: Colors.black, // Card color in dark mode
+        scaffoldBackgroundColor: const Color(0xff403b88),
+        cardColor: Colors.black,
         textTheme: GoogleFonts.latoTextTheme().copyWith(
-          bodyText1: const TextStyle(color: Colors.white), // Adjust text color for dark mode
-          bodyText2: const TextStyle(color: Colors.white), // Adjust text color for dark mode
-          headline6: const TextStyle(
-            color: Colors.white, // Set app bar title text color for dark mode
+          bodyLarge: const TextStyle(color: Colors.white),
+          bodyMedium: const TextStyle(color: Colors.white),
+          titleLarge: const TextStyle(
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      initialRoute: "/cart",
+      initialRoute: "/",
       routes: {
-        "/": (context) => HomePage(),
+        "/": (context) => HomePage(cart: cart),
         "/login": (context) => LoginPage(),
-        "/cart": (context) => CartPage()
+        "/cart": (context) => cart_page.CartPage(),
       },
     );
   }
