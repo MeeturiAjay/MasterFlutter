@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:masterflutter/models/cart_model.dart';
 
 class CartPage extends StatelessWidget {
-  //final CartModel cart;
-
   const CartPage({Key? key}) : super(key: key);
 
   @override
@@ -31,25 +29,22 @@ class CartPage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.all(32.0),
               child: CartList(),
             ),
-            CartTotal(),
-          ],
-        ),
+          ),
+          CartTotal(),
+        ],
       ),
     );
   }
 }
 
-
 class CartTotal extends StatelessWidget {
-  //final CartModel cart;
-
   const CartTotal({Key? key}) : super(key: key);
 
   @override
@@ -82,7 +77,6 @@ class CartTotal extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              // Implement buy functionality here
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
@@ -109,8 +103,6 @@ class CartTotal extends StatelessWidget {
 }
 
 class CartList extends StatefulWidget {
-  //final CartModel cart;
-
   const CartList({Key? key}) : super(key: key);
 
   @override
@@ -125,26 +117,27 @@ class _CartListState extends State<CartList> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return ListView.builder(
-      shrinkWrap: true,
       itemCount: _cart.items?.length,
       itemBuilder: (context, index) => ListTile(
-          leading: Icon(
-            Icons.done_outline_rounded,
-            color: Colors.green,
+        leading: Icon(
+          Icons.done_outline_rounded,
+          color: Colors.green,
+        ),
+        title: Text(
+          _cart.items[index].name,
+          style: TextStyle(
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
-          title: Text(
-            _cart.items[index].name,
-            style: TextStyle(
-              color: isDarkMode ? Colors.white : Colors.black,
-            ),
+        ),
+        trailing: IconButton(
+          icon: Icon(
+            Icons.remove_circle_outline,
+            color: Colors.red,
           ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.remove_circle_outline,
-              color: Colors.red,
-            ),
-            onPressed: () {},
-          )),
+          onPressed: () {},
+        ),
+      ),
     );
   }
 }
+
