@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:masterflutter/models/cart_model.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../core/store.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -49,7 +52,7 @@ class CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cart = CartModel();
+    final CartModel _cart = (VxState.store as MyStore).cart;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return SizedBox(
@@ -103,10 +106,10 @@ class CartTotal extends StatelessWidget {
 }
 
 class CartList extends StatelessWidget{
-  final _cart = CartModel();
 
   @override
   Widget build(BuildContext context) {
+    final CartModel _cart = (VxState.store as MyStore).cart;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return _cart.items.isEmpty? Center(child: Text("Cart is empty!..", style: TextStyle(color: isDarkMode? Colors.white : Colors.indigo, fontWeight: FontWeight.bold, fontSize: 32),)) : ListView.builder(

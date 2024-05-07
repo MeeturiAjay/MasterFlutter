@@ -1,11 +1,17 @@
 import 'dart:convert';
-
+import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
+import 'package:masterflutter/core/store.dart';
+import 'package:masterflutter/models/cart_model.dart';
+import 'package:masterflutter/models/catalog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:masterflutter/core/store.dart';
 import 'package:masterflutter/models/cart_model.dart';
 import 'package:masterflutter/models/catalog.dart';
 import 'package:masterflutter/pages/home_details.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
   final CartModel cart;
@@ -194,7 +200,7 @@ class CatalogItem extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Padding(
                         padding: const EdgeInsets.only(right: 4.0),
-                        child: _AddToCart(catalog: catalog),
+                        child: AddToCart(catalog: catalog),
                       ),
                     ),
                   ],
@@ -208,53 +214,38 @@ class CatalogItem extends StatelessWidget {
   }
 }
 
-class _AddToCart extends StatelessWidget {
+class AddToCart extends StatelessWidget {
   final Item catalog;
-
-  //final CartModel cart;
-
-  _AddToCart({Key? key, required this.catalog}) : super(key: key);
-
-  final _cart = CartModel();
+  AddToCart({
+    Key? key,
+    required this.catalog,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isInCart = _cart.items.contains(catalog) ?? false;
-    return ElevatedButton(
-      onPressed: () {
-        if (!isInCart) {
-          isInCart = isInCart.toggle();
-          final _catalog = CatalogModels();
-          _cart.catalog = _catalog;
-          _cart.add(catalog);
-          // setState(() {});
-        }
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          isInCart ? Colors.grey : Colors.indigo,
-        ),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      ),
-      child: isInCart
-          ? Icon(
-              Icons.done,
-              color: Colors.white,
-            )
-          : Text(
-              "Add to Cart",
-              style: TextStyle(
-                color: Colors.white,
-              ),
+    return VxConsumer(
+      mutations: {AddMutation},
+      builder: (context, _, __) {
+        final CartModel _cart = (VxState.store as MyStore).cart;
+        bool isInCart = _cart.items.contains(catalog) ?? false;
+        return ElevatedButton(
+          onPressed: () {
+            if (!isInCart) {
+              //context.vxNav.push(Uri.parse("/cart"));
+              AddMutation(catalog);
+            }
+          },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+              isInCart ? Colors.indigo : Colors.indigo,
             ),
+            shape: MaterialStateProperty.all(
+              StadiumBorder(),
+            ),
+          ),
+          child: isInCart ? Icon(Icons.done, color: Colors.white,) : Text("Add to Cart", style: TextStyle(color: Colors.white),),
+        );
+      },
     );
   }
-}
-
-extension BoolExtension on bool {
-  bool toggle() => !this;
 }
