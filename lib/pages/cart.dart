@@ -116,7 +116,7 @@ class _CartListState extends State<CartList> {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return ListView.builder(
+    return _cart.items.isEmpty? Center(child: Text("Cart is empty!..", style: TextStyle(color: isDarkMode? Colors.white : Colors.indigo, fontWeight: FontWeight.bold, fontSize: 32),)) : ListView.builder(
       itemCount: _cart.items?.length,
       itemBuilder: (context, index) => ListTile(
         leading: Icon(
@@ -134,10 +134,18 @@ class _CartListState extends State<CartList> {
             Icons.remove_circle_outline,
             color: Colors.red,
           ),
-          onPressed: () {},
+          onPressed: () {
+            _cart.remove(_cart.items[index]);
+            setState(() {});
+          },
         ),
       ),
     );
   }
 }
+
+
+
+
+
 

@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     await Future.delayed(const Duration(seconds: 2));
     final catalogJson =
-    await rootBundle.loadString("assets/files/catalog.json");
+        await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
     CatalogModels.items = List.from(productsData)
@@ -60,13 +60,13 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 30),
               _isLoading
                   ? Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        isDarkMode ? Colors.white : Colors.indigo),
-                  ),
-                ),
-              )
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              isDarkMode ? Colors.white : Colors.indigo),
+                        ),
+                      ),
+                    )
                   : CatalogList(),
             ],
           ),
@@ -135,8 +135,7 @@ class CatalogList extends StatelessWidget {
 class CatalogItem extends StatelessWidget {
   final Item catalog;
 
-  const CatalogItem({Key? key, required this.catalog})
-      : super(key: key);
+  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -211,32 +210,34 @@ class CatalogItem extends StatelessWidget {
 
 class _AddToCart extends StatefulWidget {
   final Item catalog;
+
   //final CartModel cart;
 
-  const _AddToCart({Key? key, required this.catalog})
-      : super(key: key);
+  const _AddToCart({Key? key, required this.catalog}) : super(key: key);
 
   @override
   State<_AddToCart> createState() => _AddToCartState();
 }
 
 class _AddToCartState extends State<_AddToCart> {
-  bool isAdded = false;
+  final _cart = CartModel();
 
   @override
   Widget build(BuildContext context) {
+    bool isInCart = _cart.items.contains(widget.catalog) ?? false;
     return ElevatedButton(
       onPressed: () {
-        isAdded = isAdded.toggle();
-        final _catalog = CatalogModels();
-        final _cart = CartModel();
-        _cart.catalog = _catalog;
-        _cart.add(widget.catalog);
-        setState(() {});
+        if (!isInCart) {
+          isInCart = isInCart.toggle();
+          final _catalog = CatalogModels();
+          _cart.catalog = _catalog;
+          _cart.add(widget.catalog);
+          setState(() {});
+        }
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
-          isAdded ? Colors.grey : Colors.indigo,
+          isInCart ? Colors.grey : Colors.indigo,
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
@@ -244,17 +245,17 @@ class _AddToCartState extends State<_AddToCart> {
           ),
         ),
       ),
-      child: isAdded
+      child: isInCart
           ? Icon(
-        Icons.done,
-        color: Colors.white,
-      )
+              Icons.done,
+              color: Colors.white,
+            )
           : Text(
-        "Add to Cart",
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
+              "Add to Cart",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }
