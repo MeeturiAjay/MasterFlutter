@@ -60,13 +60,19 @@ class CartTotal extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            "\$${_cart.totalPrice}",
-            style: TextStyle(
-              color: isDarkMode ? Colors.white : Colors.indigo,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+          VxConsumer(
+            notifications: {},
+            mutations: {RemoveMutation},
+            builder: (context, store, status) {
+              return Text(
+                "\$${_cart.totalPrice}",
+                style: TextStyle(
+                  color: isDarkMode ? Colors.white : Colors.indigo,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              );
+            },
           ),
           ElevatedButton(
             style: ButtonStyle(
@@ -105,15 +111,27 @@ class CartTotal extends StatelessWidget {
   }
 }
 
-class CartList extends StatelessWidget{
 
+class CartList extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    VxState.watch(context, on: [RemoveMutation]);
     final CartModel _cart = (VxState.store as MyStore).cart;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return _cart.items.isEmpty? Center(child: Text("Cart is empty!..", style: TextStyle(color: isDarkMode? Colors.white : Colors.indigo, fontWeight: FontWeight.bold, fontSize: 32),)) : ListView.builder(
-      itemCount: _cart.items?.length,
+    return _cart.items.isEmpty
+        ? Center(
+      child: Text(
+        "Cart is empty!..",
+        style: TextStyle(
+          color: isDarkMode ? Colors.white : Colors.indigo,
+          fontWeight: FontWeight.bold,
+          fontSize: 32,
+        ),
+      ),
+    )
+        : ListView.builder(
+      itemCount: _cart.items?.length ?? 0,
       itemBuilder: (context, index) => ListTile(
         leading: Icon(
           Icons.done_outline_rounded,
@@ -130,15 +148,13 @@ class CartList extends StatelessWidget{
             Icons.remove_circle_outline,
             color: Colors.red,
           ),
-          onPressed: () {
-            _cart.remove(_cart.items[index]);
-            // setState(() {});
-          },
+          onPressed: () => RemoveMutation(_cart.items[index]),
         ),
       ),
     );
   }
 }
+
 
 
 
