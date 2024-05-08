@@ -13,6 +13,20 @@ import 'package:masterflutter/models/catalog.dart';
 import 'package:masterflutter/pages/home_details.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import '../models/catalog.dart';
+import 'cart.dart';
+//import '../screens/cart_page.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+import '../models/catalog.dart';
+
 class HomePage extends StatefulWidget {
   final CartModel cart;
 
@@ -34,7 +48,7 @@ class _HomePageState extends State<HomePage> {
   loadData() async {
     await Future.delayed(const Duration(seconds: 2));
     final catalogJson =
-        await rootBundle.loadString("assets/files/catalog.json");
+    await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogJson);
     var productsData = decodedData["products"];
     CatalogModels.items = List.from(productsData)
@@ -47,14 +61,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _cart = (VxState.store as MyStore).cart;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
-        onPressed: () => Navigator.pushNamed(context, "/cart"),
-        child: Icon(CupertinoIcons.cart),
+      floatingActionButton: VxBuilder(
+        mutations: {AddMutation, RemoveMutation},
+        builder: (context, store, status) => FloatingActionButton(
+          backgroundColor: Colors.indigo,
+          foregroundColor: Colors.white,
+          onPressed: () => Navigator.pushNamed(context, "/cart"),
+          child: Icon(CupertinoIcons.cart),
+        ).badge(
+          color: Colors.lightGreen,
+          count: _cart.items.length,
+          textStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -66,13 +88,13 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 30),
               _isLoading
                   ? Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              isDarkMode ? Colors.white : Colors.indigo),
-                        ),
-                      ),
-                    )
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        isDarkMode ? Colors.white : Colors.indigo),
+                  ),
+                ),
+              )
                   : CatalogList(),
             ],
           ),
@@ -81,6 +103,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
 
 class CatalogHeader extends StatelessWidget {
   const CatalogHeader({Key? key});
@@ -161,7 +185,7 @@ class CatalogItem extends StatelessWidget {
             height: 100,
             margin: const EdgeInsets.all(8),
             child: Hero(
-              tag: 'product_${catalog.id}', // Unique tag for each item
+              tag: Key(catalog.id.toString()), // Unique tag for each item
               child: Image.network(catalog.image),
             ),
           ),
@@ -216,6 +240,7 @@ class CatalogItem extends StatelessWidget {
 
 class AddToCart extends StatelessWidget {
   final Item catalog;
+
   AddToCart({
     Key? key,
     required this.catalog,
@@ -242,7 +267,15 @@ class AddToCart extends StatelessWidget {
               StadiumBorder(),
             ),
           ),
-          child: isInCart ? Icon(Icons.done, color: Colors.white,) : Text("Add to Cart", style: TextStyle(color: Colors.white),),
+          child: isInCart
+              ? Icon(
+                  Icons.done,
+                  color: Colors.white,
+                )
+              : Text(
+                  "Add to Cart",
+                  style: TextStyle(color: Colors.white),
+                ),
         );
       },
     );
